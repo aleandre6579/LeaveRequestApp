@@ -2,8 +2,8 @@ package app
 
 import (
 	"encoding/json"
-	"guessing-game/db/models/guess"
-	user "guessing-game/db/models/user"
+	"leave-request-app/db/models/leave"
+	user "leave-request-app/db/models/user"
 	"net/http"
 
 	"gorm.io/gorm"
@@ -63,6 +63,10 @@ func PostLeave(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	guess.CreateLeave(db, req.EmployeeID, req.Reason, req.StartDate, req.EndDate)
+	err := leave.CreateLeave(db, req.EmployeeID, req.Reason, req.StartDate, req.Duration)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	w.WriteHeader(http.StatusCreated)
 }

@@ -3,10 +3,10 @@ package app
 import (
 	"context"
 	"fmt"
-	"guessing-game/config"
-	"guessing-game/db"
-	"guessing-game/db/models/guess"
-	"guessing-game/db/models/user"
+	"leave-request-app/config"
+	"leave-request-app/db"
+	"leave-request-app/db/models/leave"
+	"leave-request-app/db/models/user"
 	"net/http"
 
 	"gorm.io/driver/mysql"
@@ -41,8 +41,8 @@ func (app *App) Start(ctx context.Context) error {
 			return err
 		}
 	}
-	if !migrator.HasTable(&guess.Leave{}) {
-		if err := db.InitTable(app.DBClient, &guess.Leave{}); err != nil {
+	if !migrator.HasTable(&leave.Leave{}) {
+		if err := db.InitTable(app.DBClient, &leave.Leave{}); err != nil {
 			return err
 		}
 	}

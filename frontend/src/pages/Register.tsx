@@ -34,7 +34,7 @@ const Register = ()  => {
             setConfirmPasswordError("Please confirm password")
             return
         }
-
+        
         if (password.length < 7) {
             setPasswordError("The password must be 8 characters or longer")
             return

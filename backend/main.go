@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
-	"guessing-game/app"
-	"guessing-game/config"
+	"leave-request-app/app"
+	"leave-request-app/config"
 )
 
 func main() {

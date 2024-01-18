@@ -4,65 +4,66 @@ import {
     DatePicker,
     Form,
     Input,
+    InputNumber,
 } from 'antd';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 
-const {RangePicker} = DatePicker;
-
-const formItemLayout = {
-    labelCol: {
-        xs: {span: 24},
-        sm: {span: 6},
-    },
-    wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 14},
-    },
-};
-
-
-const LeaveForm: React.FC = ({dataSource}) => {
+const LeaveForm: React.FC = ({appendData}) => {
+    const navigate = useNavigate()
 
     const submitForm = async (values: any) => {
-        console.log('Received values of form: ', values);
+        values['startDate'] = values['startDate'].format('D-MM-YYYY')
+        console.log(values)
         let res: any = null
         try {
-            res = await axios.post("/api/leave", JSON.stringify({employeeID:values['employeeId'],reason:values['reason'],startDate:values['startDate'],endDDate:values['endDate']}))
+            res = await axios.post("/api/leave", JSON.stringify({employeeID:values['employeeId'],reason:values['reason'],startDate:values['startDate'],duration:values['duration']}))
         } catch (e) {
-            window.alert("Failed to create leave")
+            console.log(e)
+            if(e.response.status === 401) {
+                console.log("ASD")
+                navigate('/login')
+            }
             return
         }
-        console.log(res)
-        dataSource.append(res.data)
+        appendData(values)
     }
 
     return (
-        <div style={{border: '1px solid rgba(0,0,0,0.3)', padding: "30px", marginBottom: "0px", marginRight: "30px"}}>
-            <Form {...formItemLayout} labelCol={{span: 10}} variant="outlined" className='' onFinish={submitForm}
+        <div style={{border: '1px solid rgba(0,0,0,0.3)',padding:'15px'}}>
+            <Form labelCol={{span: 10}} variant="outlined" style={{width:'300px'}} onFinish={submitForm}
             >
-                <Form.Item label="Employee ID" name="Input" rules={[{required: true, message: 'ID is required!'}]}>
-                    <Input/>
+                <Form.Item label="Employee ID" name="employeeId" rules={[{required: true, message: 'ID is required!'}]}>
+                    <InputNumber className='w-full'/>
                 </Form.Item>
 
                 <Form.Item
                     label="Reason"
-                    name="TextArea"
+                    name="reason"
                     rules={[{required: true, message: 'Reason required!'}]}
                 >
-                    <Input.TextArea/>
+                    <Input.TextArea className='w-full'/>
                 </Form.Item>
 
                 <Form.Item
-                    label="Leave Dates"
-                    name="RangePicker"
+                    label="Leave Date"
+                    name="startDate"
                     rules={[{required: true, message: 'Please input!'}]}
                 >
-                    <RangePicker/>
+                    <DatePicker className='w-full'/>
+                </Form.Item>
+                
+                <Form.Item
+                    label="Duration (Days)"
+                    name="duration"
+                    rules={[{required: true, message: 'Please input!'}]}
+                >
+                    <InputNumber className='w-full'/>
                 </Form.Item>
 
-                <Form.Item wrapperCol={{offset: 6, span: 16}}>
-                    <Button type="primary" htmlType="submit" onClick={submitForm}>
+                <Form.Item>
+                    <Button type="primary" className='bg-sky-500' htmlType="submit">
                         Submit
                     </Button>
                 </Form.Item>

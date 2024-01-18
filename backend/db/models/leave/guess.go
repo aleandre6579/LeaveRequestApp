@@ -1,8 +1,6 @@
-package guess
+package leave
 
 import (
-	"time"
-
 	"gorm.io/gorm"
 )
 
@@ -11,6 +9,6 @@ type Leave struct {
 
 	EmployeeID int
 	Reason     string
-	StartDate  time.Time
-	EndDate    time.Time
+	StartDate  string
+	Duration   int
 }
