@@ -18,10 +18,10 @@ const LeaveForm: React.FC<Props> = (props: Props) => {
     const auth = useAuth()
 
     const submitForm = async (values: any) => {
-        values['startDate'] = values['startDate'].format('D-MM-YYYY')
+        values['StartDate'] = values['StartDate'].format('D-MM-YYYY')
         let res: any = null
         try {
-            res = await axios.post("/api/leave", JSON.stringify({employeeID:values['employeeId'],reason:values['reason'],startDate:values['startDate'],duration:values['duration']}))
+            res = await axios.post("/api/leave", JSON.stringify({employeeId:values['EmployeeId'],reason:values['Reason'],startDate:values['StartDate'],duration:values['Duration']}))
         } catch (e: any) {
             if(e.response.status === 401) {
                 auth?.setToken("")
@@ -36,13 +36,13 @@ const LeaveForm: React.FC<Props> = (props: Props) => {
         <div style={{border: '1px solid rgba(0,0,0,0.3)',padding:'15px'}}>
             <Form labelCol={{span: 10}} variant="outlined" style={{width:'300px'}} onFinish={submitForm}
             >
-                <Form.Item label="Employee ID" name="employeeId" rules={[{required: true, message: 'ID is required!'}]}>
+                <Form.Item label="Employee ID" name="EmployeeId" rules={[{required: true, message: 'ID is required!'}]}>
                     <InputNumber className='w-full'/>
                 </Form.Item>
 
                 <Form.Item
                     label="Reason"
-                    name="reason"
+                    name="Reason"
                     rules={[{required: true, message: 'Reason required!'}]}
                 >
                     <Input.TextArea className='w-full'/>
@@ -50,7 +50,7 @@ const LeaveForm: React.FC<Props> = (props: Props) => {
 
                 <Form.Item
                     label="Leave Date"
-                    name="startDate"
+                    name="StartDate"
                     rules={[{required: true, message: 'Please input!'}]}
                 >
                     <DatePicker className='w-full'/>
@@ -58,7 +58,7 @@ const LeaveForm: React.FC<Props> = (props: Props) => {
                 
                 <Form.Item
                     label="Duration (Days)"
-                    name="duration"
+                    name="Duration"
                     rules={[{required: true, message: 'Please input!'}]}
                 >
                     <InputNumber className='w-full'/>

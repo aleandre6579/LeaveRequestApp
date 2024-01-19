@@ -83,8 +83,8 @@ func PostLeave(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	}
 
 	leaveResponse := &LeaveRequest{
-		LeaveID:    leave.ID,
-		EmployeeID: leave.EmployeeID,
+		ID:         leave.ID,
+		EmployeeID: leave.EmployeeId,
 		Reason:     leave.Reason,
 		StartDate:  leave.StartDate,
 		Duration:   leave.Duration,

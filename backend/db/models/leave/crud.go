@@ -20,7 +20,7 @@ func GetLeaves(db *gorm.DB) ([]Leave, error) {
 
 func CreateLeave(db *gorm.DB, employeeId int, reason string, startDate string, duration int) (*Leave, error) {
 	leave := &Leave{
-		EmployeeID: employeeId,
+		EmployeeId: employeeId,
 		Reason:     reason,
 		StartDate:  startDate,
 		Duration:   duration,

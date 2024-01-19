@@ -15,7 +15,7 @@ type LeavePostRequest struct {
 }
 
 type LeaveRequest struct {
-	LeaveID    uint   `json:"leaveID"`
+	ID         uint   `json:"leaveID"`
 	EmployeeID int    `json:"employeeID"`
 	Reason     string `json:"reason"`
 	StartDate  string `json:"startDate"`

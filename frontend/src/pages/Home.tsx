@@ -25,7 +25,6 @@ function App() {
             }
             return
         }
-
         const newData = { Data: res.data }
         setData(newData)
     }
@@ -81,10 +80,10 @@ function App() {
                     renderItem={(item, _) => (
                         <List.Item
                         >
-                            <Card title={item.reason}>
-                                <div className="flex justify-between"><span className='font-medium'>Employee ID:</span><span>{item.employeeId}</span></div>
-                                <div className="flex justify-between"><span className='font-medium'>Start Date:</span><span className="ml-2">{item.startDate}</span></div>
-                                <div className="flex justify-between"><span className='font-medium'>Duration (days):</span><span>{item.duration}</span></div>
+                            <Card title={item.Reason}>
+                                <div className="flex justify-between"><span className='font-medium'>Employee ID:</span><span>{item.EmployeeId}</span></div>
+                                <div className="flex justify-between"><span className='font-medium'>Start Date:</span><span className="ml-2">{item.StartDate}</span></div>
+                                <div className="flex justify-between"><span className='font-medium'>Duration (days):</span><span>{item.Duration}</span></div>
                                 <Button onClick={() => deleteLeaveRequest(item)} className="mt-5" danger icon={<CloseOutlined/>}></Button>
                             </Card>
                         </List.Item>

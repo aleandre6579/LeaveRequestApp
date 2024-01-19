@@ -7,7 +7,7 @@ import (
 type Leave struct {
 	gorm.Model
 	ID         uint
-	EmployeeID int
+	EmployeeId int
 	Reason     string
 	StartDate  string
 	Duration   int
