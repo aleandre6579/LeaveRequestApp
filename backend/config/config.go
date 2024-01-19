@@ -3,9 +3,8 @@ package config
 import "os"
 
 type Config struct {
-	Addr             string
-	DatabaseConfig   DatabaseConfig
-	DifficultyConfig map[string]LevelBounds
+	Addr           string
+	DatabaseConfig DatabaseConfig
 }
 
 type DatabaseConfig struct {
@@ -15,24 +14,14 @@ type DatabaseConfig struct {
 	DBName   string
 }
 
-type LevelBounds struct {
-	Lower int
-	Upper int
-}
-
 func CreateConfig() Config {
 	config := Config{
 		Addr: ":8080",
 		DatabaseConfig: DatabaseConfig{
 			User:     "user",
-			Password: "password",
+			Password: "pass",
 			Addr:     "localhost:3306",
 			DBName:   "db",
-		},
-		DifficultyConfig: map[string]LevelBounds{
-			"easy":   LevelBounds{1, 5},
-			"medium": LevelBounds{1, 10},
-			"hard":   LevelBounds{1, 20},
 		},
 	}
 

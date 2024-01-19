@@ -24,12 +24,12 @@ func loadRoutes(app *App) *chi.Mux {
 	router.Use(middleware.Logger)
 	router.Use(context.SetContextMiddleware)
 
-	router.Post("/api/login", func(w http.ResponseWriter, r *http.Request) {
+	router.Post("/login", func(w http.ResponseWriter, r *http.Request) {
 		Login(app.DBClient, w, r)
 		w.WriteHeader(http.StatusOK)
 	})
 
-	router.Post("/api/register", func(w http.ResponseWriter, r *http.Request) {
+	router.Post("/register", func(w http.ResponseWriter, r *http.Request) {
 		Register(app.DBClient, w, r)
 		w.WriteHeader(http.StatusOK)
 	})
@@ -37,18 +37,18 @@ func loadRoutes(app *App) *chi.Mux {
 	router.Group(func(router chi.Router) {
 		router.Use(AuthMiddleware)
 
-		router.Post("/api/leave", func(w http.ResponseWriter, r *http.Request) {
+		router.Post("/leave", func(w http.ResponseWriter, r *http.Request) {
 			PostLeave(app.DBClient, w, r)
 			w.WriteHeader(http.StatusOK)
 		})
 
-		router.Delete("/api/leave/{id}", func(w http.ResponseWriter, r *http.Request) {
+		router.Delete("/leave/{id}", func(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(chi.URLParam(r, "id"))
 			DeleteLeave(app.DBClient, w, r)
 			w.WriteHeader(http.StatusOK)
 		})
 
-		router.Get("/api/leaves", func(w http.ResponseWriter, r *http.Request) {
+		router.Get("/leaves", func(w http.ResponseWriter, r *http.Request) {
 			GetLeaves(app.DBClient, w, r)
 			w.WriteHeader(http.StatusOK)
 		})

@@ -9,21 +9,27 @@ import {
 import axios from "axios";
 import { useAuth } from '../auth/authProvider'; 
 
-const LeaveForm: React.FC = ({appendData}) => {
+interface Props {
+    appendData: any
+}
+
+const LeaveForm: React.FC<Props> = (props: Props) => {
+
+    const auth = useAuth()
 
     const submitForm = async (values: any) => {
         values['startDate'] = values['startDate'].format('D-MM-YYYY')
         let res: any = null
         try {
             res = await axios.post("/api/leave", JSON.stringify({employeeID:values['employeeId'],reason:values['reason'],startDate:values['startDate'],duration:values['duration']}))
-        } catch (e) {
+        } catch (e: any) {
             if(e.response.status === 401) {
                 auth?.setToken("")
             }
             return
         }
-        values['leaveID'] = res.data.leaveID
-        appendData(values)
+        values['ID'] = res.data.leaveID
+        props.appendData(values)
     }
 
     return (
