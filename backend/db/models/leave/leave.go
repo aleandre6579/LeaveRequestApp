@@ -6,7 +6,7 @@ import (
 
 type Leave struct {
 	gorm.Model
-
+	ID         uint
 	EmployeeID int
 	Reason     string
 	StartDate  string

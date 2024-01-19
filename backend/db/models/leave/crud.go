@@ -12,7 +12,13 @@ func GetLeave(db *gorm.DB, leaveId int64) (*Leave, error) {
 	return leave, err
 }
 
-func CreateLeave(db *gorm.DB, employeeId int, reason string, startDate string, duration int) error {
+func GetLeaves(db *gorm.DB) ([]Leave, error) {
+	var leaves []Leave
+	err := db.Find(&leaves).Error
+	return leaves, err
+}
+
+func CreateLeave(db *gorm.DB, employeeId int, reason string, startDate string, duration int) (*Leave, error) {
 	leave := &Leave{
 		EmployeeID: employeeId,
 		Reason:     reason,
@@ -23,6 +29,16 @@ func CreateLeave(db *gorm.DB, employeeId int, reason string, startDate string, d
 	res := db.Create(leave)
 	if res.Error != nil {
 		fmt.Println("Failed to create new leave")
+		return &Leave{}, res.Error
+	}
+
+	return leave, nil
+}
+
+func DeleteLeave(db *gorm.DB, leaveId uint) error {
+	res := db.Delete(&Leave{ID: leaveId})
+	if res.Error != nil {
+		fmt.Println("Failed to delete leave")
 		return res.Error
 	}
 

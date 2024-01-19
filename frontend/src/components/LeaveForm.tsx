@@ -7,26 +7,22 @@ import {
     InputNumber,
 } from 'antd';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-
+import { useAuth } from '../auth/authProvider'; 
 
 const LeaveForm: React.FC = ({appendData}) => {
-    const navigate = useNavigate()
 
     const submitForm = async (values: any) => {
         values['startDate'] = values['startDate'].format('D-MM-YYYY')
-        console.log(values)
         let res: any = null
         try {
             res = await axios.post("/api/leave", JSON.stringify({employeeID:values['employeeId'],reason:values['reason'],startDate:values['startDate'],duration:values['duration']}))
         } catch (e) {
-            console.log(e)
             if(e.response.status === 401) {
-                console.log("ASD")
-                navigate('/login')
+                auth?.setToken("")
             }
             return
         }
+        values['leaveID'] = res.data.leaveID
         appendData(values)
     }
 

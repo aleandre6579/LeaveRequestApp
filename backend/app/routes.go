@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi"
@@ -38,6 +39,17 @@ func loadRoutes(app *App) *chi.Mux {
 
 		router.Post("/api/leave", func(w http.ResponseWriter, r *http.Request) {
 			PostLeave(app.DBClient, w, r)
+			w.WriteHeader(http.StatusOK)
+		})
+
+		router.Delete("/api/leave/{id}", func(w http.ResponseWriter, r *http.Request) {
+			fmt.Println(chi.URLParam(r, "id"))
+			DeleteLeave(app.DBClient, w, r)
+			w.WriteHeader(http.StatusOK)
+		})
+
+		router.Get("/api/leaves", func(w http.ResponseWriter, r *http.Request) {
+			GetLeaves(app.DBClient, w, r)
 			w.WriteHeader(http.StatusOK)
 		})
 	})
